@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +21,7 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) 
     {
+        //check if level load or DevKey are currently enabled
         if (IsInTransition || GetComponent<DevKeys>().IsCollisionDisabled)
             return;
 

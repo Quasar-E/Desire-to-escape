@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class QuitApp : MonoBehaviour
@@ -9,7 +7,7 @@ public class QuitApp : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-            Debug.Log("Esc pressed!");
+            //Debug.Log("Esc pressed!");
         }
     }
 }

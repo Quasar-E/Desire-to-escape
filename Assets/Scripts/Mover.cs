@@ -1,28 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
     [SerializeField] float thrust;
     [SerializeField] float rotationForce;
-    [SerializeField] AudioClip mainEngineThrustSound;
-    [SerializeField] AudioClip sideBoosterSound;
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem leftBoosterParticles;
     [SerializeField] ParticleSystem rightBoosterParticles;
 
-    private AudioSource audioSource;
+    private AudioSource mainEngineAudioSource;
+    private AudioSource leftBoosterAudioSource;
+    private AudioSource rightBoosterAudioSource;
+
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
+
+        mainEngineAudioSource = GameObject.Find("Engine").GetComponent<AudioSource>();
+        leftBoosterAudioSource = GameObject.Find("Left Side Booster").GetComponent<AudioSource>();
+        rightBoosterAudioSource = GameObject.Find("Right Side Booster").GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        //check level loading
         if (GetComponent<CollisionHandler>().IsInTransition)
             return;
 
@@ -31,14 +34,14 @@ public class Mover : MonoBehaviour
     }
 
     private bool isThrustSoundPlaying = false;
-
     private void ProcessThrust()
     { 
         if (Input.GetKey(KeyCode.Space))
         {
+            //prevent multiple sound play
             if (!isThrustSoundPlaying)
             {
-                GameObject.Find("Engine").GetComponent<AudioSource>().Play();
+                mainEngineAudioSource.Play();
                 isThrustSoundPlaying = true;
             }
                 
@@ -51,15 +54,13 @@ public class Mover : MonoBehaviour
         else
         {
             isThrustSoundPlaying = false;
-            GameObject.Find("Engine").GetComponent<AudioSource>().Stop();
+            mainEngineAudioSource.Stop();
             mainEngineParticles.Stop();
         }
     }
 
     private bool isLeftSideBoosterSoundPlaying = false;
     private bool isRightSideBoosterSoundPlaying = false;
-    
-
     private void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A))
@@ -69,7 +70,7 @@ public class Mover : MonoBehaviour
 
             if (!isLeftSideBoosterSoundPlaying)
             {
-                GameObject.Find("Left Side Booster").GetComponent<AudioSource>().Play();
+                leftBoosterAudioSource.Play();
                 isLeftSideBoosterSoundPlaying = true;
             }
                       
@@ -79,8 +80,10 @@ public class Mover : MonoBehaviour
         {
             leftBoosterParticles.Stop();
             isLeftSideBoosterSoundPlaying = false;
-            GameObject.Find("Left Side Booster").GetComponent<AudioSource>().Stop();
+            leftBoosterAudioSource.Stop();
         }
+
+
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -89,7 +92,7 @@ public class Mover : MonoBehaviour
 
             if (!isRightSideBoosterSoundPlaying)
             {
-                GameObject.Find("Right Side Booster").GetComponent<AudioSource>().Play();
+                rightBoosterAudioSource.Play();
                 isRightSideBoosterSoundPlaying = true;
             }
 
@@ -99,7 +102,7 @@ public class Mover : MonoBehaviour
         {
             rightBoosterParticles.Stop();
             isRightSideBoosterSoundPlaying = false;
-            GameObject.Find("Right Side Booster").GetComponent<AudioSource>().Stop();    
+            rightBoosterAudioSource.Stop();    
         }
     }
 
