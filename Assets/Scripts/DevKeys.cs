@@ -21,14 +21,14 @@ public class DevKeys : MonoBehaviour
         }
 
         //Disable collision
-        // if (Input.GetKeyDown(KeyCode.C))
-        // {
-        //     IsCollisionDisabled = IsCollisionDisabled == false ? true : false;
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            IsCollisionDisabled = IsCollisionDisabled == false ? true : false;
 
-        //     if (IsCollisionDisabled)
-        //         Debug.Log("Collision disabled");
-        //     else
-        //         Debug.Log("Collision enabled");
-        // }
+            if (IsCollisionDisabled)
+                Debug.Log("Collision disabled");
+            else
+                Debug.Log("Collision enabled");
+        }
     }
 }
